@@ -3,60 +3,59 @@
 # ============================================================
 
 # Input:
-#     ALS Clinical Dataset
-#
+   ALS Clinical Dataset
+
 # Output:
-#     Predicted ALS Progression Rate
-#
+    Predicted ALS Progression Rate
+
 # Begin
-#
+
 # 1. Load the ALS clinical dataset.
-#
+
 # 2. Perform Data Preprocessing
-#    - Copy the dataset.
-#    - Replace invalid values ('-') with NaN.
-#    - Convert required columns to numeric format.
-#    - Remove invalid records.
-#    - Handle missing values.
-#
+   - Copy the dataset.
+   - Replace invalid values ('-') with NaN.
+   - Convert required columns to numeric format.
+   - Remove invalid records.
+   - Handle missing values.
 # 3.  Target Variable
-#    - Convert Length_Diag_LNA to numeric.
-#    - Remove records where Length_Diag_LNA ≤ 0.5.
-#    - Compute Progression_Rate
-#    - Remove outliers.
-#    - Remove records with missing target values.
-#
+   - Convert Length_Diag_LNA to numeric.
+   - Remove records where Length_Diag_LNA ≤ 0.5.
+   - Compute Progression_Rate
+   - Remove outliers.
+   - Remove records with missing target values.
+
 # 4. Perform Patient Selection
-#    - Sort by latest follow-up year.
-#    - Remove duplicate SubjectUIDs.
-#    - Keep the latest patient record.
-#
+   - Sort by latest follow-up year.
+   - Remove duplicate SubjectUIDs.
+   - Keep the latest patient record.
+
 # 5. Perform Feature Selection
-#    - Define Progression_Rate as target.
-#    - Remove identifiers.
-#    - Remove leakage variables.
-#    - Remove future clinical variables.
-#    - Remove medication-related variables.
-#
+   - Define Progression_Rate as target.
+   - Remove identifiers.
+    - Remove leakage variables.
+    - Remove future clinical variables.
+    - Remove medication-related variables.
+
 # 6. Handle Missing Values
-#    - Fill numerical features using median.
-#    - Fill categorical features using mode.
-#
+   - Fill numerical features using median.
+   - Fill categorical features using mode.
+
 # 7. Encode Categorical Features
-#    - Apply One-Hot Encoding.
-#
+   - Apply One-Hot Encoding.
+
 # 8. Split Dataset
-#    - Training Set (80%)
-#    - Testing Set (20%)
+  - Training Set (80%)
+  - Testing Set (20%)
 #
 # 9. Scale Features
-#    - Fit StandardScaler on training data.
-#    - Transform training and testing data.
+- Fit StandardScaler on training data.
+- Transform training and testing data.
 #
 # 10. Initialize Base Models
-#     - Lasso Regression
-#     - Random Forest Regressor
-#     - Gradient Boosting Regressor
+     - Lasso Regression
+     - Random Forest Regressor
+     - Gradient Boosting Regressor
 #
 # 11. Initialize Meta Learner
 #     - Multi-Layer Perceptron (MLP)
