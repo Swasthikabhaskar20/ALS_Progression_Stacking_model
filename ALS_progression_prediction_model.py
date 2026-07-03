@@ -1,3 +1,22 @@
+import pandas as pd
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+from sklearn.linear_model import Lasso
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, StackingRegressor
+from sklearn.neural_network import MLPRegressor
+
+# Specify the correct file path
+file_path = 'C:/Users/swast/119.csv'
+
+# Try reading with 'latin1' encoding
+df = pd.read_csv(file_path, encoding='latin1')
+
 # ------------------------------------------------------------
 #  Data Preprocessing
 # ------------------------------------------------------------
