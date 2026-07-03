@@ -58,28 +58,28 @@
      - Gradient Boosting Regressor
 #
 # 11. Initialize Meta Learner
-#     - Multi-Layer Perceptron (MLP)
-#
+    - Multi-Layer Perceptron (MLP)
+
 # 12. Build Stacking Ensemble
-#     - Combine base models.
-#     - Use MLP as meta-learner.
-#     - Apply 5-fold Cross-Validation.
-#
+    - Combine base models.
+    - Use MLP as meta-learner.
+     - Apply 5-fold Cross-Validation.
+
 # 13. Train the Stacking Model.
-#
+
 # 14. Perform Cross-Validation
-#     - Evaluate model stability using repeated K-fold or 5-fold cross-validation.
-#
+    - Evaluate model stability using repeated K-fold or 5-fold cross-validation.
+
 # 15. Predict ALS Progression Rate.
-#
+
 # 16. Evaluate Performance
-#     - MAE
-#     - MSE
-#     - RMSE
-#     - R² Score
-#
+    - MAE
+     - MSE
+     - RMSE
+     - R² Score
+
 # 17. Visualize Results
-#     - Plot Actual vs Predicted Progression Rate.
-#
+    - Plot Actual vs Predicted Progression Rate.
+
 # End
 # ============================================================
