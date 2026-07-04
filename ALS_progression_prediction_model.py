@@ -33,19 +33,7 @@ for col in num_cols:
 
 df['Lenght_Diag_LNA'] = pd.to_numeric(df['Lenght_Diag_LNA'], errors='coerce')
 
-# ------------------------------------------------------------
-#  Target Variable Construction
-# ------------------------------------------------------------
-df = df[df['Lenght_Diag_LNA'] > 0.5]
-df['Progression_Rate'] = df['Diff'] / df['Lenght_Diag_LNA']
-df = df[(df['Progression_Rate'] > -20) & (df['Progression_Rate'] < 5)]
-df.dropna(subset=['Progression_Rate'], inplace=True)
 
-# ------------------------------------------------------------
-#  Patient Selection
-# ------------------------------------------------------------
-df = df.sort_values(by='LNA_YR', ascending=False)
-df = df.drop_duplicates(subset='SubjectUID', keep='first')
 
 # ------------------------------------------------------------
 # Feature Selection
@@ -55,7 +43,6 @@ y = df['Progression_Rate']
 X = df.drop(columns=[
     'Progression_Rate',
     'Diff',
-    'Lenght_Diag_LNA',
     'ALSFRS-R Latest',
     'Age_at_Death',
     'SubjectUID',
