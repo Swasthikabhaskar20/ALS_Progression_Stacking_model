@@ -1,6 +1,6 @@
-# ============================================================
+# 
 # Algorithm: ALS Progression Rate Prediction using Stacking Ensemble
-# ============================================================
+# 
 
 # Input:
    ALS Clinical Dataset
@@ -82,4 +82,4 @@
     - Plot Actual vs Predicted Progression Rate.
 
 # End
-# ============================================================
+# **************************************
