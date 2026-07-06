@@ -27,7 +27,7 @@
 
 # 4. Perform Patient Selection
    - Sort by latest follow-up year.
-   - Remove duplicate SubjectUIDs.
+   - Remove duplicate SubjectUIDs(because of same repeated values in all features).
    - Keep the latest patient record.
 
 # 5. Perform Feature Selection
