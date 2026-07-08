@@ -1,28 +1,57 @@
+from sklearn.model_selection import RepeatedKFold, cross_validate
 from sklearn.pipeline import Pipeline
-from sklearn.model_selection import KFold, cross_validate
 from scipy.stats import ttest_rel
+import pandas as pd
 
-
-
-# ================================
-# Stacking Pipeline
-# ================================
-stack_pipeline = Pipeline([
-    ('scaler', PowerTransformer()),
-    ('model', stacking)
-])
-
-cv = KFold(
+# =========================
+# Repeated Cross Validation
+# =========================
+cv = RepeatedKFold(
     n_splits=5,
-    shuffle=True,
+    n_repeats=10,
     random_state=42
 )
 
+# =========================
+# Pipelines
+# =========================
+rf_pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', rf)
+])
 
+gb_pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', gb)
+])
 
-# Cross-validation for Stacking
-stack_results = cross_validate(
-    stack_pipeline,
+lasso_pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', lasso)
+])
+
+mlp_pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', mlp)
+])
+
+stack_pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', stacking)
+])
+
+models = {
+    "Random Forest": rf_pipe,
+    "Gradient Boosting": gb_pipe,
+    "Lasso": lasso_pipe,
+    "MLP": mlp_pipe
+}
+
+# =========================
+# Proposed Model Scores
+# =========================
+stack_scores = cross_validate(
+    stack_pipe,
     X,
     y,
     cv=cv,
@@ -30,22 +59,42 @@ stack_results = cross_validate(
     n_jobs=-1
 )
 
-rf_mae = -rf_results['test_score']
-stack_mae = -stack_results['test_score']
+stack_mae = -stack_scores['test_score']
 
-# ================================
-# Paired t-test
-# ================================
-t_stat, p_value = ttest_rel(rf_mae, stack_mae)
+results = []
 
-print("\n========== Paired t-test ==========")
+print("\n==============================")
+print("Paired t-test Results")
+print("==============================")
 
-print("Stacking MAE      :", stack_mae)
+for name, model in models.items():
 
-print(f"\nt-statistic : {t_stat:.4f}")
-print(f"p-value     : {p_value:.6f}")
+    scores = cross_validate(
+        model,
+        X,
+        y,
+        cv=cv,
+        scoring='neg_mean_absolute_error',
+        n_jobs=-1
+    )
 
-if p_value < 0.05:
-    print("\n The proposed Stacking model performs significantly better (p < 0.05).")
-else:
-    print("\n No statistically significant difference between the models (p ≥ 0.05).")
+    model_mae = -scores['test_score']
+
+    t_stat, p_value = ttest_rel(model_mae, stack_mae)
+
+    results.append({
+        "Model": name,
+        "Baseline MAE": model_mae.mean(),
+        "Stacking MAE": stack_mae.mean(),
+        "t-statistic": t_stat,
+        "p-value": p_value,
+        "Significant": "Yes" if p_value < 0.05 else "No"
+    })
+
+results_df = pd.DataFrame(results)
+
+print(results_df)
+
+results_df.to_csv("paired_t_test_results.csv", index=False)
+
+print("\nResults saved as paired_t_test_results.csv")
