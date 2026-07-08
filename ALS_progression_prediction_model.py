@@ -143,4 +143,36 @@ print(f"RMSE : {rmse:.4f}")
 print(f"R²   : {r2:.4f}")
 
 
+explainer = LimeTabularExplainer(
+    training_data=X_train_s,
+    feature_names=selected_features,
+    mode='regression'
+)
 
+exp = explainer.explain_instance(
+    X_test_s[1],
+    stacking.predict
+)
+
+exp.show_in_notebook()
+import shap
+
+# Use small sample for speed
+X_sample = X_train_s[:100]
+
+explainer = shap.KernelExplainer(
+    stacking.predict,
+    X_sample
+)
+
+shap.summary_plot(
+    shap_values,
+    X_test.iloc[:50][selected_features]
+)
+shap.initjs()
+
+shap.force_plot(
+    explainer.expected_value,
+    shap_value_single[0],
+    X_test.iloc[i][selected_features]
+)
