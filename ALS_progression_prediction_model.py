@@ -157,7 +157,7 @@ exp = explainer.explain_instance(
 exp.show_in_notebook()
 import shap
 
-# Use small sample for speed
+
 X_sample = X_train_s[:100]
 
 explainer = shap.KernelExplainer(
